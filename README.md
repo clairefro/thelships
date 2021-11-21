@@ -24,23 +24,42 @@ From app in Alchemy dashabord
 
 From metamask wallet (use test account...)
 
-## Notes
+## Deployment
 
-temp JSON asset on JSONKeeper: https://jsonkeeper.com/b/CB26
-temp JSON asset on JSONKeeper: https://jsonkeeper.com/b/RHX1
+**Local**
 
-Functioning Rinkeby faucet: https://faucets.chain.link/rinkeby
+`yarn deploy:dev`
 
-Base64 encoder: https://www.utilities-online.info/base64
+**Rinkeby**
 
-Test deploy: https://testnets.opensea.io/collection/thelships
+`yarn deploy:rinkeby`
 
-If rinkeby OpenSea is slow, use rarible instead:
+Can view rinkeby NFTs on [testnet OpenSea](https://testnets.opensea.io/). If OpenSea is slow, use Rarible instead:
 
-`https://rinkeby.rarible.com/token/INSERT_DEPLOY_CONTRACT_ADDRESS_HERE:INSERT_TOKEN_ID_HERE`
+`https://rinkeby.rarible.com/token/CONTRACT_ADDRESS:TOKEN_ID`
+
+## Dev Tools
+
+**JSONKeeper**
+
+For temporary JSON hosting during dev
+https://jsonkeeper.com/
+
+**Rinkeby faucet**
+
+https://faucets.chain.link/rinkeby
+
+**Base64 encoder**
+
+https://www.utilities-online.info/base64
+
+**NFT Token URI previewer**
+
+https://nftpreview.0xdev.codes/
+
+## Misc
 
 Protoship:
-(`image` contains base64 encoded svg data)
 
 ```json
 {
