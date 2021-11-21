@@ -7,6 +7,8 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import { Base64 } from "./libraries/Base64.sol";
+
 contract TheLShips is ERC721URIStorage {
   using Counters for Counters.Counter;
   // Counter starts at 0
@@ -41,10 +43,33 @@ contract TheLShips is ERC721URIStorage {
 
     string memory finalSvg = buildSvg(char1, char2);
 
+
+    // Get all the JSON metadata in place and base64 encode it.
+    string memory json = Base64.encode(
+        bytes(
+            string(
+                abi.encodePacked(
+                    '{"name": "',
+                    // Name is char1xchar2
+                    char1," x ",char2,
+                    '", "description": "Two fish in the sea", "image": "data:image/svg+xml;base64,',
+                    Base64.encode(bytes(finalSvg)),
+                    '"}'
+                )
+            )
+        )
+    );
+
+    string memory finalTokenUri = string(
+        abi.encodePacked("data:application/json;base64,", json)
+    );
+
+    console.log("tokenURI: ", finalTokenUri);
+
     _safeMint(msg.sender, tokenId);
 
-    // _setTokenURI(tokenId, "data:application/json;base64,ewogICAgIm5hbWUiOiAiVGhlIE9yaWdpbmFsIEwgU2hpcCIsCiAgICAiZGVzY3JpcHRpb24iOiAiQSBwcm90b3NoaXAiLAogICAgImltYWdlIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEQ5NGJXd2dkbVZ5YzJsdmJqMGlNUzR3SWlCbGJtTnZaR2x1WnowaWRYUm1MVGdpUHo0S1BITjJaeUIyYVdWM1FtOTRQU0l4TWpZdU5qUTVJRGd4TGpFek5TQXlORFl1TnpBeUlERTFOaTR6TXpJaUlIaHRiRzV6UFNKb2RIUndPaTh2ZDNkM0xuY3pMbTl5Wnk4eU1EQXdMM04yWnlJK0NpQWdQR1JsWm5NK0NpQWdJQ0E4YkdsdVpXRnlSM0poWkdsbGJuUWdaM0poWkdsbGJuUlZibWwwY3owaWRYTmxjbE53WVdObFQyNVZjMlVpSUhneFBTSXhPVGt1TWpBNUlpQjVNVDBpT0RVdU56VXlJaUI0TWowaU1UazVMakl3T1NJZ2VUSTlJakkwTWk0d09EUWlJR2xrUFNKbmNtRmthV1Z1ZEMweElpQnpjSEpsWVdSTlpYUm9iMlE5SW5CaFpDSWdaM0poWkdsbGJuUlVjbUZ1YzJadmNtMDlJbTFoZEhKcGVDZ3dMak13TWpnek5Td2dNQzQ1TlRNd05ETXNJQzB4TGpNMU5EUXpOU3dnTUM0ME16QXpOemtzSURRd01DNHhORFV5T1RRc0lDMDFOeTR5TXpVMUtTSStDaUFnSUNBZ0lEeHpkRzl3SUc5bVpuTmxkRDBpTUNJZ2MzUjViR1U5SW5OMGIzQXRZMjlzYjNJNklISm5ZbUVvTWpVMUxDQXhOemdzSURFeE5Td2dNU2tpTHo0S0lDQWdJQ0FnUEhOMGIzQWdiMlptYzJWMFBTSXhJaUJ6ZEhsc1pUMGljM1J2Y0MxamIyeHZjam9nY21kaVlTZ3lOVFVzSURFeU1pd2dNVE1zSURFcElpOCtDaUFnSUNBOEwyeHBibVZoY2tkeVlXUnBaVzUwUGdvZ0lEd3ZaR1ZtY3o0S0lDQThaeUIwY21GdWMyWnZjbTA5SW0xaGRISnBlQ2d4TENBd0xDQXdMQ0F4TENBd0xqQXdNREF3TVN3Z0xUUXVOakUzTkRFMEtTSStDaUFnSUNBOGNtVmpkQ0I0UFNJeE1qWXVOalE1SWlCNVBTSTROUzQzTlRJaUlIZHBaSFJvUFNJeU5EWXVOekF5SWlCb1pXbG5hSFE5SWpFMU5pNHpNeklpSUhOMGVXeGxQU0p3WVdsdWRDMXZjbVJsY2pvZ1ptbHNiRHNnWm1sc2JDMXlkV3hsT2lCdWIyNTZaWEp2T3lCbWFXeHNPaUIxY213b0kyZHlZV1JwWlc1MExURXBPeUl2UGdvZ0lDQWdQSFJsZUhRZ2MzUjViR1U5SW1acGJHdzZJSEpuWWlneU5UVXNJREkxTlN3Z01qVTFLVHNnWm05dWRDMW1ZVzFwYkhrNklFRnlhV0ZzTENCellXNXpMWE5sY21sbU95Qm1iMjUwTFhOcGVtVTZJREl4Y0hnN0lHWnZiblF0ZDJWcFoyaDBPaUEzTURBN0lIUmxlSFF0ZEhKaGJuTm1iM0p0T2lCMWNIQmxjbU5oYzJVN0lIZG9hWFJsTFhOd1lXTmxPaUJ3Y21VN0lpQjRQU0l5TWpVdU5UQTFJaUI1UFNJeE5qZ3VORGs0SWo1VFNFbFFQQzkwWlhoMFBnb2dJRHd2Wno0S1BDOXpkbWMrIgp9");
-    _setTokenURI(tokenId, "foo");
+    _setTokenURI(tokenId, finalTokenUri);
+
     console.log("An NFT w/ ID %s has been minted to %s", tokenId, msg.sender);
 
     _tokenIds.increment();
