@@ -5,6 +5,7 @@
   "author": "Claire Froelich",
   "license": "MIT",
   "scripts": {
+    "test": "npx hardhat test",
     "dev": "npx hardhat run scripts/dev.js",
     "dev:rinkeby": "npx hardhat run scripts/dev.js --network rinkeby",
     "deploy:dev": "npx hardhat run scripts/deploy.js",

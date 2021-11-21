@@ -13,10 +13,10 @@ contract TheLShips is ERC721URIStorage {
   using Counters for Counters.Counter;
   // Counter starts at 0
   Counters.Counter private _tokenIds;
-
+  
   string baseSvg = "<svg viewBox='126.649 81.135 246.702 156.332' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient gradientUnits='userSpaceOnUse' x1='199.209' y1='85.752' x2='199.209' y2='242.084' id='gradient-1' spreadMethod='pad' gradientTransform='matrix(0.302835, 0.953043, -1.354435, 0.430379, 400.145294, -57.2355)'><stop offset='0' style='stop-color: rgba(255, 178, 115, 1)'/><stop offset='1' style='stop-color: rgba(255, 122, 13, 1)'/></linearGradient></defs><g transform='matrix(1, 0, 0, 1, 0.000001, -4.617414)'><rect x='126.649' y='85.752' width='246.702' height='156.332' style='paint-order: fill; fill-rule: nonzero; fill: url(#gradient-1);'/><text style='fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 21px; font-weight: 700; text-transform: uppercase; white-space: pre;' x='50%' y='150'><tspan x='140' dy='1.2em'>";
   
-  string[] chars = [
+  string[] public chars = [
     "Bette", 
     "Tina", 
     "Shane", 
@@ -32,7 +32,7 @@ contract TheLShips is ERC721URIStorage {
     "Helena"
     ];
 
-  constructor() ERC721("TheLShips", "LSHIP"){}
+  constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol){}
 
   function mintShip() public {
     string memory char1;
@@ -54,6 +54,10 @@ contract TheLShips is ERC721URIStorage {
                     char1," x ",char2,
                     '", "description": "Two fish in the sea", "image": "data:image/svg+xml;base64,',
                     Base64.encode(bytes(finalSvg)),
+                    '", "char1": "',
+                    char1,
+                    '", "char2": "',
+                    char2,
                     '"}'
                 )
             )
@@ -113,9 +117,10 @@ contract TheLShips is ERC721URIStorage {
     return filtered;
   }
 
-  function compareStrings(string memory a, string memory b) public view returns (bool) {
+  function compareStrings(string memory a, string memory b) public pure returns (bool) {
     return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
   }
+
 
   function buildSvg(string memory _char1, string memory _char2) public view returns (string memory){
     string memory finalSvg = string(abi.encodePacked(
