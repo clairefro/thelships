@@ -7,6 +7,10 @@ const main = async () => {
   // wait to deploy transaction to complete
   await contract.deployed();
   console.log("Deployed to address: ", contract.address);
+
+  let txn = await contract.mintShip();
+  await txn.wait();
+  console.log("minted");
 };
 
 main()
