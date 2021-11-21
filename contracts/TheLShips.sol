@@ -56,11 +56,11 @@ contract TheLShips is ERC721URIStorage {
                     char1," x ",char2,
                     '", "description": "Two fish in the sea", "image": "data:image/svg+xml;base64,',
                     Base64.encode(bytes(finalSvg)),
-                    '", "char1": "',
+                    '", "attributes": { "char1": "',
                     char1,
                     '", "char2": "',
                     char2,
-                    '"}'
+                    '"} }'
                 )
             )
         )
@@ -79,7 +79,7 @@ contract TheLShips is ERC721URIStorage {
     console.log("An NFT w/ ID %s has been minted to %s", tokenId, msg.sender);
 
     _tokenIds.increment();
-    
+
     emit NewTokenMinted(msg.sender, tokenId);
   }
 
