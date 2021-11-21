@@ -50,7 +50,7 @@ contract TheLShips is ERC721URIStorage {
             string(
                 abi.encodePacked(
                     '{"name": "',
-                    // Name is char1xchar2
+                    // Name is char1 x char2
                     char1," x ",char2,
                     '", "description": "Two fish in the sea", "image": "data:image/svg+xml;base64,',
                     Base64.encode(bytes(finalSvg)),
