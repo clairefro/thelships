@@ -32,14 +32,14 @@ contract TheLShips is ERC721URIStorage {
     "Helena"
     ];
 
-  constructor() ERC721("TheLShips", "LSHIP"){
-    console.log("Yo from the constructor");
-  }
+  constructor() ERC721("TheLShips", "LSHIP"){}
 
   function mintShip() public {
+    string memory char1;
+    string memory char2;
+
     uint tokenId = _tokenIds.current();
-    string memory char1 = getRandomChar(tokenId, 1);
-    string memory char2 = getRandomChar(tokenId, 2);
+    (char1, char2) = getRandomPair(tokenId);
 
     string memory finalSvg = buildSvg(char1, char2);
 
@@ -81,8 +81,40 @@ contract TheLShips is ERC721URIStorage {
     return chars[rand];
   } 
 
+  function getRandomCharWithout(uint _tokenId, uint16 _charNum, string memory _char) public view returns (string memory) {
+    string[] memory filtered = charsWithout(_char);
+    uint rand = random(string(abi.encodePacked(Strings.toString(_charNum), Strings.toString(_tokenId))));
+    rand = rand % filtered.length;
+    return filtered[rand];
+  } 
+
+  function getRandomPair(uint _tokenId) internal view returns (string memory, string memory)  {
+    string memory char1 = getRandomChar(_tokenId, 1);
+    string memory char2 = getRandomCharWithout(_tokenId, 2, char1);
+
+    return (char1, char2);
+  }
+
   function random(string memory _input) internal pure returns (uint) {
      return uint(keccak256(abi.encodePacked(_input)));
+  }
+
+  function charsWithout(string memory _char) internal view returns (string[] memory) {
+    uint filteredLength = chars.length - 1;
+    string[] memory filtered = new string[](filteredLength); 
+
+    uint j = 0;
+    for(uint i = 0; i < chars.length; i++) {
+      if(!compareStrings(_char, chars[i])) {
+        filtered[j] = chars[i];
+        j++;
+      }
+    }
+    return filtered;
+  }
+
+  function compareStrings(string memory a, string memory b) public view returns (bool) {
+    return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
   }
 
   function buildSvg(string memory _char1, string memory _char2) public view returns (string memory){
