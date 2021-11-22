@@ -26,6 +26,20 @@ From metamask wallet (use test account...)
 
 ## Deployment
 
+### NOTE - Do this each deploy to Rinkbey
+
+If you want to have new contract updates reflect in client app, must do the following:
+
+1. Update the **contract address**
+
+1. Update the **abi**
+
+1. Update the `OPENSEA_COLLECTION_URL`
+
+(temp client link: https://replit.com/@clairefro/clairefro-nft-project#src/App.jsx)
+
+### Deploys by env:
+
 **Local**
 
 `yarn deploy:dev`
