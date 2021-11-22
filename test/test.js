@@ -10,7 +10,6 @@ before(async () => {
   const BuildSvg = await ethers.getContractFactory("BuildSvg");
   const buildSvg = await BuildSvg.deploy();
   await buildSvg.deployed();
-  // link(BuildSvg, "contracts/libraries/BuildSvg.sol:BuildSvg", buildSvg.address);
 
   Contract = await ethers.getContractFactory("TheLShips", {
     libraries: {
