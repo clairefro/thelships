@@ -4,6 +4,7 @@ const { TOKEN_NAME, TOKEN_SYMBOL } = require("../config");
 
 let Contract;
 let contract;
+let expectedSupply = 0;
 
 before(async () => {
   const BuildSvg = await ethers.getContractFactory("BuildSvg");
@@ -29,12 +30,21 @@ describe("TheLShips", function () {
 });
 
 describe("Minting", function () {
-  it("Mint a token", async function () {
-    const txn = await contract.mintShip();
-    // console.log(txn);
-    const tokenCnt = await contract.totalSupply();
-
-    expect(tokenCnt).to.equal(2);
+  it("It should start with totalSupply of 0", async function () {
+    expect(await contract.totalSupply()).to.equal(expectedSupply);
+  });
+  it("It should mint a token", async function () {
+    await contract.mintShip();
+    expectedSupply++;
+    expect(await contract.totalSupply()).to.equal(expectedSupply);
+  });
+  it("It should increment totalSupply on each mint", async function () {
+    await contract.mintShip();
+    expectedSupply++;
+    expect(await contract.totalSupply()).to.equal(expectedSupply);
+    await contract.mintShip();
+    expectedSupply++;
+    expect(await contract.totalSupply()).to.equal(expectedSupply);
   });
 });
 

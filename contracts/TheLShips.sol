@@ -51,7 +51,8 @@ contract TheLShips is ERC721URIStorage {
   }
   
   function totalSupply() public view returns (uint) {
-    return _tokenIds.current();
+    // Tokens increments after successful mint, so subtract 1 to get current total.
+    return _tokenIds.current() - 1; 
   }
 
   /** Calculate number of possible unique paires using round robin algorithm */
