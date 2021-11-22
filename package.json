@@ -11,7 +11,7 @@
     "dev:rinkeby": "npx hardhat run scripts/dev.js --network rinkeby",
     "deploy:dev": "npx hardhat run scripts/deploy.js",
     "deploy:rinkeby": "npx hardhat run scripts/deploy.js --network rinkeby",
-    "verify:rinkeby": "npx hardhat verify --constructor-args verify-args.js 0x8d1b89216baf11eaacb2c035da912d9d7c62c9db --network rinkeby"
+    "verify:rinkeby": "npx hardhat verify --constructor-args verify-args.js 0x60de9FB8ee0462F86e2301305abC26f40758A61a --network rinkeby"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.0",

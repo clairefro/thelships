@@ -5,7 +5,7 @@ const main = async () => {
   const buildSvg = await BuildSvg.deploy();
   await buildSvg.deployed();
 
-  Contract = await hre.ethers.getContractFactory("TheLShips", {
+  const Contract = await hre.ethers.getContractFactory("TheLShips", {
     libraries: {
       BuildSvg: buildSvg.address,
     },

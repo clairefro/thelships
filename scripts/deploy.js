@@ -5,7 +5,7 @@ const main = async () => {
   const buildSvg = await BuildSvg.deploy();
   await buildSvg.deployed();
 
-  Contract = await hre.ethers.getContractFactory("TheLShips", {
+  const Contract = await hre.ethers.getContractFactory("TheLShips", {
     libraries: {
       BuildSvg: buildSvg.address,
     },
@@ -14,7 +14,8 @@ const main = async () => {
   // deploy (defaults to local ethereum blockchain if no --network arg provided)
   const contract = await Contract.deploy(TOKEN_NAME, TOKEN_SYMBOL);
   // wait to deploy transaction to complete
-  await contract.deployed();
+  const res = await contract.deployed();
+  console.log({ res });
   console.log("Deployed to address: ", contract.address);
 
   let txn = await contract.mintShip();
