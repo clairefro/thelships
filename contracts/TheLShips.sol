@@ -121,14 +121,14 @@ contract TheLShips is ERC721URIStorage {
     emit NewTokenMinted(msg.sender, tokenId, char1Id, char2Id);
   }
 
-  function getRandomChar1Id(uint _tokenId, uint _charNum) public view returns (uint) {
-    uint rand = random(string(abi.encodePacked(Strings.toString(_charNum), Strings.toString(_tokenId))));
+  function getRandomChar1Id(uint _tokenId, uint _seed) public view returns (uint) {
+    uint rand = random(string(abi.encodePacked(Strings.toString(_seed), Strings.toString(_tokenId))));
     rand = rand % chars.length;
     return rand;
   } 
 
   /** Get a second random ID exclusive of the first. People can't date themselves. */
-  function getRandomChar2Id(uint _tokenId, uint _charNum, uint _exclude) public view returns (uint) {
+  function getRandomChar2Id(uint _tokenId, uint _seed, uint _exclude) public view returns (uint) {
     // Create array of all indexes (charIds) except _exclude
     uint[] memory filteredIndexes = new uint[](chars.length - 1);
     uint j = 0;
@@ -139,7 +139,7 @@ contract TheLShips is ERC721URIStorage {
       }
     }
 
-    uint rand = random(string(abi.encodePacked(Strings.toString(_charNum), Strings.toString(_tokenId))));
+    uint rand = random(string(abi.encodePacked(Strings.toString(_seed), Strings.toString(_tokenId))));
     uint randomIndex = rand % filteredIndexes.length;
 
     return filteredIndexes[randomIndex];
