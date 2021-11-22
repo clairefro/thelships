@@ -15,7 +15,7 @@ contract TheLShips is ERC721URIStorage {
   // Counter starts at 0
   Counters.Counter private _tokenIds;
   
-  event NewTokenMinted(address _sender, uint256 _tokenId);
+  event NewTokenMinted(address _sender, uint _tokenId, uint _char1Id, uint _char2Id);
   
   string[] public chars = [
     "Bette", 
@@ -54,7 +54,7 @@ contract TheLShips is ERC721URIStorage {
     return _tokenIds.current();
   }
 
-  // Calculate using round robin algorithm
+  // Calculate number of possible unique paires using round robin algorithm
   function calcUniquePairCount() public view returns (uint){
     uint _charCount = chars.length;
     if(_charCount < 2) return 0;
@@ -82,8 +82,6 @@ contract TheLShips is ERC721URIStorage {
 
     char1 = chars[char1Id];
     char2 = chars[char2Id];
-
-    console.log(char1Id, char2Id);
 
     string memory finalSvg = BuildSvg.buildSvg(char1, char2);
 
@@ -122,7 +120,7 @@ contract TheLShips is ERC721URIStorage {
     
     _tokenIds.increment();
 
-    emit NewTokenMinted(msg.sender, tokenId);
+    emit NewTokenMinted(msg.sender, tokenId, char1Id, char2Id);
   }
 
   function getRandomChar1Id(uint _tokenId, uint _charNum) public view returns (uint) {
