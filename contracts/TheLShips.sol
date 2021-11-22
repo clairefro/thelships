@@ -23,6 +23,7 @@ contract TheLShips is ERC721URIStorage {
     "Shane", 
     "Alice", 
     "Dana", 
+    "Tasha",
     "Gigi",
     "Dani", 
     "Sophie", 
@@ -30,7 +31,25 @@ contract TheLShips is ERC721URIStorage {
     "Jennny",
     "Marina",
     "Carmen",
-    "Helena"
+    "Helena", 
+    "Jamie",
+    "Lover Cindy",
+    "Dawn Denbo",
+    "Max",
+    "Gabby",
+    "Papi",
+    "Marina",
+    "Cherie Jaffe",
+    "Candace",
+    "Jodi", 
+    "Molly", 
+    "Phyllis",
+    "Joyce",
+    "Lisa",
+    "Dylan",
+    "Lara",
+    "Tonya",
+    "Uta"    
   ];
 
   mapping(uint => uint[]) pairs;
