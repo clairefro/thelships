@@ -1,4 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
+require("hardhat-gas-reporter");
 
 require("dotenv").config();
 
@@ -20,6 +22,9 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.4",
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
+  },
   networks: {
     rinkeby: {
       url: process.env.STAGING_ALCHEMY_API_URL,
@@ -30,5 +35,11 @@ module.exports = {
       url: process.env.PROD_ALCHEMY_API_URL,
       accounts: [process.env.PRIVATE_KEY],
     },
+  },
+  /** For testing */
+  gasReporter: {
+    currency: "USD",
+    gasPrice: 100,
+    coinmarketcap: process.env.COIN_MARKET_CAP_API_KEY,
   },
 };
