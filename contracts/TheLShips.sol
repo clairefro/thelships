@@ -54,7 +54,7 @@ contract TheLShips is ERC721URIStorage {
     return _tokenIds.current();
   }
 
-  // Calculate number of possible unique paires using round robin algorithm
+  /** Calculate number of possible unique paires using round robin algorithm */
   function calcUniquePairCount() public view returns (uint){
     uint _charCount = chars.length;
     if(_charCount < 2) return 0;
@@ -63,7 +63,7 @@ contract TheLShips is ERC721URIStorage {
 
   /** 
     Adds hashes of both combos ("1x2" and "2x1") to pairHashes.
-    This allows is to prevent minting duplicate pairs in the future.
+    This allows us to prevent minting duplicate pairs in the future using the isUniquePair function.
   */     
   function addPairHashes(uint _char1Id, uint _char2Id) internal {
     pairHashes.push(keccak256(abi.encodePacked(_char1Id, "x", _char2Id)));
@@ -85,7 +85,7 @@ contract TheLShips is ERC721URIStorage {
 
     string memory finalSvg = BuildSvg.buildSvg(char1, char2);
 
-    // Get all the JSON metadata in place and base64 encode it.
+    /** Get all the JSON metadata in place and base64 encode it. */ 
     string memory json = Base64.encode(
         bytes(
             string(
@@ -113,13 +113,11 @@ contract TheLShips is ERC721URIStorage {
 
     _setTokenURI(tokenId, finalTokenUri);
 
-    // Add pair after successful mint
+    // On successful mint add the pair to pairHashes and increment tokenId
     addPairHashes(char1Id, char2Id);
-
-    console.log("An NFT w/ ID %s has been minted to %s", tokenId, msg.sender);
-    
     _tokenIds.increment();
 
+    console.log("An NFT w/ ID %s has been minted to %s", tokenId, msg.sender);
     emit NewTokenMinted(msg.sender, tokenId, char1Id, char2Id);
   }
 
@@ -156,8 +154,8 @@ contract TheLShips is ERC721URIStorage {
   function getUniqueNewIdPair(uint _tokenId) internal view supplyRemaining returns (uint, uint) {
     uint char1Id;
     uint char2Id;
-    // Loop until unique
     uint seed = 1;
+    // Loop until unique
     while(true) {
       (char1Id, char2Id) = getRandomIdPair(_tokenId, seed);
       seed++;
