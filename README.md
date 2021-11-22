@@ -16,13 +16,25 @@ npx hardhat help
 
 ## Config
 
-### ALECHEMY_API_URL
+`STAGING_ALCHEMY_API_URL`
 
-From app in Alchemy dashabord
+From app in Alchemy dashabord. Used for Staging app.
 
-### PRIVATE_KEY
+`PROD_ALCHEMY_API_URL`
+
+From app in Alchemy dashabord. Used for Prod app.
+
+`PRIVATE_KEY`
 
 From metamask wallet (use test account...)
+
+`ETHERSCAN_API_KEY`
+
+Needed for running `yarn verifiy:rinekby`
+
+`COIN_MARKET_CAP_API_KEY`
+
+(For testing only) Used to fetch current ETH price for `hardhat-gas-reporter`
 
 ## Deployment
 
