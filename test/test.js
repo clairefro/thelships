@@ -53,6 +53,14 @@ describe("Metadata", function () {
       /^data:application\/json;base64,/
     );
   });
+  it("Contract URI should contain name and description that match config, and an image defined", async function () {
+    const contractURI = await contract.contractURI();
+    const buff = Buffer.from(contractURI.split(",")[1], "base64");
+    const json = JSON.parse(buff.toString("ascii"));
+    expect(json.name).to.match(new RegExp(TOKEN_NAME));
+    expect(json.description).to.match(new RegExp(TOKEN_DESCRIPTION));
+    expect(json.image).to.be.a("string");
+  });
 });
 
 describe("Public getters", function () {
