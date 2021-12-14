@@ -16,6 +16,8 @@ contract TheLShips is ERC721URIStorage {
   Counters.Counter private _tokenIds;
   
   event NewTokenMinted(address _sender, uint _tokenId, uint _char1Id, uint _char2Id);
+
+  string private _contractURI;
   
   string[] public chars = [
     "Bette", 
@@ -65,8 +67,11 @@ contract TheLShips is ERC721URIStorage {
     _;
   }
 
-  constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) sufficientChars {
+  constructor(string memory _name, string memory _symbol, string memory _description) ERC721(_name, _symbol) sufficientChars {
     _tokenIds.increment(); // start counting at 1
+
+    string memory contractURIEndcoded_ = buildContractURIEncoded(_name, _description);
+    setContractURI(contractURIEndcoded_);
   }
   
   function totalSupply() public view returns (uint) {
@@ -74,7 +79,11 @@ contract TheLShips is ERC721URIStorage {
     return _tokenIds.current() - 1; 
   }
 
-  /** Calculate number of possible unique paires using round robin algorithm */
+  function getCharsCount() public view returns (uint) {
+    return chars.length; 
+  }
+
+  /** Calculate number of possible unique pairs using round robin algorithm */
   function calcUniquePairCount() public view returns (uint){
     uint _charCount = chars.length;
     if(_charCount < 2) return 0;
@@ -113,7 +122,7 @@ contract TheLShips is ERC721URIStorage {
                     '{"name": "',
                     // Name is char1 x char2
                     char1," x ",char2,
-                    '", "description": "Two fish in the sea", "image": "data:image/svg+xml;base64,',
+                    '", "description": "Just two fish in the sea", "image": "data:image/svg+xml;base64,',
                     Base64.encode(bytes(finalSvg)),
                     '", "attributes": { "char1": "',
                     char1,
@@ -199,6 +208,35 @@ contract TheLShips is ERC721URIStorage {
       }
     }
     return isUnique;
+  }
+
+  function buildContractURIEncoded(string memory _name, string memory _description) private pure returns (string memory){
+    return Base64.encode(
+        bytes(
+            string(
+                abi.encodePacked(
+                    '{"name": "',
+                    _name,
+                    '", "description": "',
+                    _description,
+                    '", "image": "data:image/svg+xml;base64,',
+                    Base64.encode(bytes(BuildSvg.logoSvg())),
+                    '"}'
+                )
+            )
+        )
+    );
+  }
+
+  function setContractURI(string memory contractURIEncoded_) private {
+    _contractURI = string(abi.encodePacked(
+        "data:application/json;base64,", contractURIEncoded_
+  
+    ));
+  }
+
+  function contractURI() public view returns (string memory) {
+    return _contractURI;
   }
 
   function bToS(bytes32 b) internal pure  returns (string memory) {

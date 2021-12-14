@@ -1,4 +1,4 @@
-const { TOKEN_NAME, TOKEN_SYMBOL } = require("../config");
+const { TOKEN_NAME, TOKEN_SYMBOL, TOKEN_DESCRIPTION } = require("../config");
 
 const main = async () => {
   const BuildSvg = await hre.ethers.getContractFactory("BuildSvg");
@@ -11,11 +11,15 @@ const main = async () => {
     },
   });
 
+  console.log("Deploying...");
   // deploy (defaults to local ethereum blockchain if no --network arg provided)
-  const contract = await Contract.deploy(TOKEN_NAME, TOKEN_SYMBOL);
+  const contract = await Contract.deploy(
+    TOKEN_NAME,
+    TOKEN_SYMBOL,
+    TOKEN_DESCRIPTION
+  );
   // wait to deploy transaction to complete
   const res = await contract.deployed();
-  console.log({ res });
   console.log("Deployed to address: ", contract.address);
 
   let txn = await contract.mintShip();

@@ -1,4 +1,4 @@
-const { TOKEN_NAME, TOKEN_SYMBOL } = require("../config");
+const { TOKEN_NAME, TOKEN_SYMBOL, TOKEN_DESCRIPTION } = require("../config");
 
 const main = async () => {
   const BuildSvg = await hre.ethers.getContractFactory("BuildSvg");
@@ -11,7 +11,7 @@ const main = async () => {
     },
   });
 
-  contract = await Contract.deploy(TOKEN_NAME, TOKEN_SYMBOL);
+  contract = await Contract.deploy(TOKEN_NAME, TOKEN_SYMBOL, TOKEN_DESCRIPTION);
   await contract.deployed();
 
   // const Contract = await hre.ethers.getContractFactory("TheLShips");

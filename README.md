@@ -1,18 +1,6 @@
-# Basic Sample Hardhat Project
+# The L Ships
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+Off the chart.
 
 ## Config
 
@@ -87,7 +75,7 @@ https://nftpreview.0xdev.codes/
 
 ## Contract Graveyard
 
-Some paste contract deployment addresses of interest:
+Some past contract deployment addresses of interest:
 
 0x7D90e1ec06716cEecAfbA09AF1575946589423fd
 
