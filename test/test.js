@@ -70,6 +70,18 @@ describe("Public getters", function () {
   it("It should return max number of unique pairs", async function () {
     const charCount = parseInt(await contract.getCharsCount());
     const expected = (charCount * (charCount - 1)) / 2;
+    const max = parseInt(await contract.calcUniquePairCount());
     expect(parseInt(await contract.calcUniquePairCount())).to.equal(expected);
+  });
+  it("It should return all characters", async function () {
+    const chars = [];
+    const charCnt = parseInt(await contract.getCharsCount());
+    for (let i = 0; i < charCnt; i++) {
+      const char = await contract.chars(i);
+      chars.push(char);
+    }
+    expect(chars).to.be.a("array");
+    expect(chars[0]).to.be.a("string");
+    expect(chars.length).to.equal(charCnt);
   });
 });

@@ -1,5 +1,6 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.4;
+pragma experimental ABIEncoderV2;
 
 import "hardhat/console.sol";
 
@@ -30,6 +31,8 @@ contract TheLShips is ERC721URIStorage {
     "Dani", 
     "Sophie", 
     "Pippa" ,
+    "Micah",
+    "Finely",
     "Jennny",
     "Marina",
     "Carmen",
@@ -39,14 +42,15 @@ contract TheLShips is ERC721URIStorage {
     "Dawn Denbo",
     "Max",
     "Gabby",
+    "Paige",
     "Papi",
     "Marina",
     "Cherie Jaffe",
     "Candace",
     "Jodi", 
-    "Molly", 
     "Phyllis",
     "Joyce",
+    "Nikki",
     "Lisa",
     "Dylan",
     "Lara",
@@ -238,7 +242,7 @@ contract TheLShips is ERC721URIStorage {
   function contractURI() public view returns (string memory) {
     return _contractURI;
   }
-
+ 
   function bToS(bytes32 b) internal pure  returns (string memory) {
     return string(abi.encodePacked(b));
   }
