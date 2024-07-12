@@ -2,6 +2,8 @@
 
 Off the chart.
 
+example collection on testnet: https://testnets.opensea.io/ja/collection/thelships-q38hhm0bip
+
 ## Config
 
 `STAGING_ALCHEMY_API_URL`
